@@ -25,9 +25,9 @@ module WeatherApi
       if point_response.success?
         forecast_api_url = parse_response_to_struct(point_response).properties.forecast
         forecast_response = @connection.get(forecast_api_url)
-        if forecast_response.success?
-          parse_forecast_periods(forecast_response)
-        end
+        forecast_response.success? ? parse_forecast_periods(forecast_response) : []
+      else
+        []
       end
     end
 
@@ -52,32 +52,36 @@ module WeatherApi
   end
 
   class ForecastPeriod
-    attr_accessor :beginning, :ending
+    attr_accessor :first, :second
 
     def day
-      Date.parse(@beginning.startTime).strftime("%A")
+      Date.parse(@first.startTime).strftime("%A")
     end
 
     def high_temperature
-      if @beginning.temperature > @ending.temperature
-        @beginning.temperature
-      else
-        @ending.temperature
-      end
+      check_temperature { @first.temperature > @second.temperature }
     end
 
     def low_temperature
-      if @beginning.temperature < @ending.temperature
-        @beginning.temperature
-      else
-        @ending.temperature
+      check_temperature { @first.temperature < @second.temperature }
       end
+
+    def only_one_part?
+      second.nil?
     end
 
     private
-      def initialize(beginning, ending)
-        @beginning = beginning
-        @ending = ending
+      def initialize(first, second)
+        @first = first
+        @second = second
+      end
+
+      def check_temperature
+        if only_one_part? || yield
+          @first.temperature
+        else
+          @second.temperature
+        end
       end
   end
 end

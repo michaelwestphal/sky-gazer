@@ -53,7 +53,36 @@ class WeatherApiTest < ActiveSupport::TestCase
     assert_equal 'Tuesday', period.day
   end
 
-  test "we do not yet handle failed API calls" do
+  test "a forecast period usually has two parts" do
+    forecast_periods = @client.get_forecast(@forecast)
+    period = forecast_periods.first
+    assert_not period.only_one_part?
+  end
+
+  test "a forecast period can have only one part" do
+    conn = Faraday.new do |builder|
+      builder.adapter :test do |stub|
+        stub.get("https://api.weather.gov/points/#{@forecast.latitude},#{@forecast.longitude}") do
+          [ 200, { 'Content-Type': 'application/json', }, '{ "properties": { "forecast": "some_url" } }' ]
+        end
+
+        stub.get("some_url") do
+          [ 200, { 'Content-Type': 'application/json', },
+            '{ "properties": { "periods": [{ "startTime": "2016-03-29T06:00:00-06:00", "temperature": 70 }] }}'
+          ]
+        end
+      end
+    end
+    client = WeatherApi::Client.new(conn)
+    forecast_periods = client.get_forecast(@forecast)
+    period = forecast_periods.first
+
+    assert period.only_one_part?
+    assert_equal 70, period.high_temperature
+    assert_equal 70, period.low_temperature
+  end
+
+  test "an empty array is returned when an API error occurs" do
     conn = Faraday.new do |builder|
       builder.adapter :test do |stub|
         stub.get("https://api.weather.gov/points/#{@forecast.latitude},#{@forecast.longitude}") do
@@ -63,7 +92,7 @@ class WeatherApiTest < ActiveSupport::TestCase
     end
 
     client = WeatherApi::Client.new(conn)
-    assert_nil client.get_forecast(@forecast)
+    assert_equal [], client.get_forecast(@forecast)
   end
 
   test "we do not yet handle malformed data" do
