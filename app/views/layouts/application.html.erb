@@ -6,11 +6,25 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+
+    <%# TODO: What is the "rails way" in bring these in and use them?
+         - Perhaps a partial answer for the JS side of things: https://github.com/rails/importmap-rails
+         - Now for the CSS?
+         - Ditto ditto SimpleCss above
+    %>
+    <script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+   <head>
+     <h1>Sky Gazer</h1>
+   </head>
+
+   <%= yield %>
   </body>
 </html>

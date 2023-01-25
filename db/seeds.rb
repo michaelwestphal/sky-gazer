@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+Forecast.create!([
+  {
+    name: "Eau Claire, WI",
+    latitude: 44.8165,
+    longitude: -91.5007
+  }
+])

@@ -1,0 +1,25 @@
+<%= form_with(model: forecast,
+      data: { controller: 'place-search' }) do |form| %>
+  <% if forecast.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(forecast.errors.count, "error") %> prohibited this forecast from being saved:</h2>
+
+      <ul>
+        <% forecast.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <input type="search" data-place-search-target="search" aria-label="Search for location" placeholder="Search for location..."/>
+
+  <%# TODO: Is there are helper for the data-*-target options?  %>
+  <%= form.hidden_field :name, data: { 'place-search-target': 'name' } %>
+  <%= form.hidden_field :latitude, data: { 'place-search-target': 'latitude' }  %>
+  <%= form.hidden_field :longitude, data: { 'place-search-target': 'longitude' }   %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

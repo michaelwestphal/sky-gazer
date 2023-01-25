@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# Lat/Lng helper:
+# https://developer.mapquest.com/documentation/tools/latitude-longitude-finder/
+#
+# NOTE: ⚠️ Truncate to the fourth decimal place as this is the max precision the
+#  National Weather Service API allows!!
+
+one:
+  id: 1
+  name: Menomonie, Wisconsin
+  latitude: 44.8815
+  longitude: -91.9293
+
+two:
+  id: 2
+  name: Holly Springs, North Carolina
+  latitude: 35.6524
+  longitude: -78.8336

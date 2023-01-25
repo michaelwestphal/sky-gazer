@@ -1,0 +1,27 @@
+<% if notice %>
+  <p style="color: green"><%= notice %></p>
+<% end %>
+
+<%= render @forecast %>
+
+<table>
+ <% @forecast.periods.each do |period| %>
+  <tr>
+    <td><strong><%= period.day %></strong></td>
+    <td>High: <%= period.high_temperature %>&deg;</td>
+    <td>Low: <%= period.low_temperature %>&deg;</td>
+    <td>
+      <%= period.beginning.name %>: <%= period.beginning.shortForecast %>
+      <br>
+      <%= period.ending.name %>: <%= period.ending.shortForecast %>
+    </td>
+  </tr>
+ <% end %>
+</table>
+
+<div>
+  <%= link_to "Edit this forecast", edit_forecast_path(@forecast) %> |
+  <%= link_to "Back to forecasts", forecasts_path %>
+
+  <%= button_to "Destroy this forecast", @forecast, method: :delete %>
+</div>
