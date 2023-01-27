@@ -64,7 +64,7 @@ module WeatherApi
 
     def low_temperature
       check_temperature { @first.temperature < @second.temperature }
-      end
+    end
 
     def only_one_part?
       second.nil?
