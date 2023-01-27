@@ -15,6 +15,7 @@ processes = []
 
 [env]
   PORT = "8080"
+  DATABASE_URL = "sqlite3:///mnt/sky_gazer_volume/production.sqlite3"
 
 [experimental]
   auto_rollback = true
