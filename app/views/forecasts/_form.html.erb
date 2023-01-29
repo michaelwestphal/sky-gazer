@@ -1,5 +1,7 @@
-<%= form_with(model: forecast,
-      data: { controller: 'place-search' }) do |form| %>
+<%= form_with(model: forecast, data: {
+  'controller': 'place-search',
+  'place-search-api-key-value': "#{Rails.application.credentials.mapquest_api_key}"
+}) do |form| %>
   <% if forecast.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(forecast.errors.count, "error") %> prohibited this forecast from being saved:</h2>

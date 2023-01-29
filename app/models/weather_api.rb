@@ -13,7 +13,7 @@ module WeatherApi
   class Client
     def initialize(connection = nil)
       # Set the User-Agent per the National Weather Service API requirements
-      @connection = connection || Faraday.new(headers: { "User-Agent": "EMAIL_OR_DOMAIN_HERE" })
+      @connection = connection || Faraday.new(headers: { "User-Agent": Rails.application.credentials.nws_user_agent })
     end
 
     def get_forecast(location)

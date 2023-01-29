@@ -16,17 +16,17 @@ Please see the [`.ruby-version`](.ruby-version) file in the project.
 #### MapQuest API key
 
 1. [Create a MapQuest developer account](https://developer.mapquest.com/user/login/sign-up) and get an API key.
-1. Update `app/javascript/controllers/place_search_controller.js` with the key.
+1. Add a `mapquest_api_key` [Custom Credential](https://guides.rubyonrails.org/security.html#custom-credentials).
 
 Docs: https://developer.mapquest.com/documentation/place-search-js/v1.0/
 
 #### National Weather Service API
 
-1. Update the `User-Agent` header value within `app/models/weather_api.rb` with your domain or email address.
+1. Add a `nws_user_agent` [Custom Credential](https://guides.rubyonrails.org/security.html#custom-credentials).
  
 Docs: https://www.weather.gov/documentation/services-web-api
 
-- [ ] Determine the "rails way" to do the above in a less manual way
+- [x] Determine the "rails way" to do the above in a less manual way. ***Answer:** [Custom Credentials](https://guides.rubyonrails.org/security.html#custom-credentials)*
 
 ### Getting started
 
@@ -43,6 +43,11 @@ bin/rails server
 bin/rails test
 bin/rails test:system
 ```
+
+### Deploy to [Fly.io](https://fly.io)
+
+1. [Getting started](https://fly.io/docs/rails/getting-started/)
+1. [Configure for SQLite3](https://fly.io/docs/rails/advanced-guides/sqlite3/)
 
 ### Further Configuration
 
