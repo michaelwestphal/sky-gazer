@@ -2,10 +2,11 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
     static targets = ['search', 'name', 'latitude', 'longitude']
+    static values = { apiKey: String }
 
     connect() {
         this.searchRef = placeSearch({
-            key: 'MAP_QUEST_API_KEY_HERE',
+            key: this.apiKeyValue,
             container: this.searchTarget,
             // useDeviceLocation: true
         });
